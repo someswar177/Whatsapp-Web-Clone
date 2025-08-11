@@ -170,7 +170,7 @@ export default function App() {
               Welcome to our <strong>WhatsApp Web clone!</strong>:
             </p>
             <ul className="list-disc list-inside text-gray-600 mb-4 space-y-1">
-              <li>Lightweight demo built with Webhook Payload Processor.</li>
+              <li>Lightweight demo built with Webhook Payload Processor using <strong>socket io</strong>.</li>
               <li>You can send and view messages.</li>
             </ul>
             <p className="text-gray-700">

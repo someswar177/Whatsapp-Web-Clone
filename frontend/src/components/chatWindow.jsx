@@ -79,10 +79,11 @@ export default function ChatWindow({ conversation, messages, onBack, isMobile })
           {isMobile && (
             <button
               onClick={onBack}
-              className="text-white mr-2 p-1 rounded hover:bg-[#2A3942]"
+              className="text-white font-extrabold text-3xl mr-2 p-2 rounded hover:bg-[#2A3942] transition-colors"
             >
               ←
             </button>
+
           )}
           <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white font-semibold">
             {conversation.contactName?.[0] || conversation.wa_id?.[0] || "?"}

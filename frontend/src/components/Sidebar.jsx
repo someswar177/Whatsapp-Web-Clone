@@ -20,7 +20,7 @@ export default function Sidebar({ conversations, onOpen, activeConv, isMobile })
   `}
       >
         <h1
-          className={`text-white font-bold ${isMobile ? "text-xl" : "text-3xl"}`}
+          className={`text-white font-bold py-0.5 ${isMobile ? "text-xl" : "text-3xl"}`}
         >
           Chats
         </h1>

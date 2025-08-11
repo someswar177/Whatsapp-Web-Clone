@@ -79,7 +79,7 @@ export default function ChatWindow({ conversation, messages, onBack, isMobile })
           {isMobile && (
             <button
               onClick={onBack}
-              className="text-white font-extrabold text-3xl mr-2 p-2 rounded hover:bg-[#2A3942] transition-colors"
+              className="text-white font-extrabold text-3xl mr-1 p-1 rounded hover:bg-[#2A3942] transition-colors"
             >
               ←
             </button>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from './components/Sidebar'
 import ChatWindow from './components/chatWindow'
+import LoadingScreen from './components/LoadingScreen'
 import { socket } from './socket'
 import api from './api'
 
@@ -8,64 +9,75 @@ export default function App(){
   const [conversations, setConversations] = useState([])
   const [activeConv, setActiveConv] = useState(null)
   const [messagesMap, setMessagesMap] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    // fake loading progress
+    if (loading) {
+      const timer = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 100) {
+            clearInterval(timer)
+            setLoading(false)
+            return 100
+          }
+          return Math.min(prev + Math.floor(Math.random() * 10) + 5, 100)
+        })
+      }, 300)
+      return () => clearInterval(timer)
+    }
+  }, [loading])
 
   useEffect(()=>{
-    fetchConversations()
-
-    socket.on('connect', ()=>{
-      console.log('socket connected', socket.id)
-      // join user-wide room? We don't have login; don't auto-join any user rooms
-    })
-
-    socket.on('message:new', (msg)=>{
-      // append message into messagesMap
-      setMessagesMap(prev=>{
-        const cid = msg.conversationId
-        const arr = prev[cid]?.slice() || []
-        arr.push(msg)
-        return { ...prev, [cid]: arr }
-      })
-      // update conversation list
-      setConversations(prev => {
-        // find conv
-        const idx = prev.findIndex(c=>c._id === msg.conversationId)
-        if(idx !== -1){
-          const copy = prev.slice()
-          copy[idx].lastMessage = msg
-          // move to top
-          copy.unshift(copy.splice(idx,1)[0])
-          return copy
-        }
-        // if not found, create a new convo preview
-        const newC = { _id: msg.conversationId, wa_id: msg.wa_id, contactName: msg.contactName, lastMessage: msg }
-        return [newC, ...prev]
-      })
-    })
-
-    socket.on('message:updated', (msg)=>{
-      // update message in messagesMap
-      setMessagesMap(prev=>{
-        const cid = msg.conversationId
-        const arr = (prev[cid]||[]).map(m=> m._id===msg._id ? msg : m)
-        return {...prev, [cid]: arr}
-      })
-
-      setConversations(prev=> prev.map(c => (c._id === msg.conversationId ? { ...c, lastMessage: msg } : c)))
-    })
-
-    socket.on('conversation:update', (payload)=>{
-      // optional: reorder convs
-      // we'll fetch conversations again (simple approach)
+    if (!loading) {
       fetchConversations()
-    })
 
-    return ()=>{
-      socket.off('connect')
-      socket.off('message:new')
-      socket.off('message:updated')
-      socket.off('conversation:update')
+      socket.on('connect', ()=>{
+        console.log('socket connected', socket.id)
+      })
+
+      socket.on('message:new', (msg)=>{
+        setMessagesMap(prev=>{
+          const cid = msg.conversationId
+          const arr = prev[cid]?.slice() || []
+          arr.push(msg)
+          return { ...prev, [cid]: arr }
+        })
+        setConversations(prev => {
+          const idx = prev.findIndex(c=>c._id === msg.conversationId)
+          if(idx !== -1){
+            const copy = prev.slice()
+            copy[idx].lastMessage = msg
+            copy.unshift(copy.splice(idx,1)[0])
+            return copy
+          }
+          const newC = { _id: msg.conversationId, wa_id: msg.wa_id, contactName: msg.contactName, lastMessage: msg }
+          return [newC, ...prev]
+        })
+      })
+
+      socket.on('message:updated', (msg)=>{
+        setMessagesMap(prev=>{
+          const cid = msg.conversationId
+          const arr = (prev[cid]||[]).map(m=> m._id===msg._id ? msg : m)
+          return {...prev, [cid]: arr}
+        })
+        setConversations(prev=> prev.map(c => (c._id === msg.conversationId ? { ...c, lastMessage: msg } : c)))
+      })
+
+      socket.on('conversation:update', ()=>{
+        fetchConversations()
+      })
+
+      return ()=>{
+        socket.off('connect')
+        socket.off('message:new')
+        socket.off('message:updated')
+        socket.off('conversation:update')
+      }
     }
-  }, [])
+  }, [loading])
 
   async function fetchConversations(){
     try{
@@ -76,10 +88,8 @@ export default function App(){
 
   async function openConversation(conv){
     setActiveConv(conv)
-    // join room on socket
     if(conv && conv._id){
       socket.emit('join', { type: 'conv', id: conv._id })
-      // fetch messages if not loaded
       if(!messagesMap[conv._id]){
         try{
           const { data } = await api.get(`/conversations/${conv.wa_id}/messages`)
@@ -87,6 +97,10 @@ export default function App(){
         }catch(e){ console.error(e) }
       }
     }
+  }
+
+  if (loading) {
+    return <LoadingScreen progress={progress} />
   }
 
   return (

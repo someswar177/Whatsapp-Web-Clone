@@ -1,26 +1,92 @@
-import React from 'react'
-import ChatListItem from './ChatListItem'
+import React from "react";
+import {
+  FaCircleNotch,
+  FaCommentAlt,
+  FaEllipsisV,
+  FaSearch,
+} from "react-icons/fa";
 
-export default function Sidebar({ conversations, onOpen, activeConv }){
+export default function Sidebar({ conversations, onOpen, activeConv }) {
   return (
-    <aside className="w-96 bg-white border-r h-full flex flex-col">
-      <div className="p-4 flex items-center gap-3 border-b">
-        <div className="w-12 h-12 rounded-full bg-green-500" />
-        <div className="flex-1">
-          <div className="font-semibold">Business</div>
-          <div className="text-xs text-gray-500">Online</div>
+    <div className="w-1/4 border-r border-[#202C33] flex flex-col bg-[#111B21]">
+      {/* Header */}
+      <div className="flex items-center justify-between p-3 bg-[#202C33] border-b border-[#202C33]">
+        <img
+          src={`https://ui-avatars.com/api/?name=You&background=2A3942&color=fff`}
+          alt="User Avatar"
+          className="w-10 h-10 rounded-full"
+        />
+        <div className="flex space-x-4 text-gray-300">
+          <FaCircleNotch className="cursor-pointer hover:text-white transition-colors" />
+          <FaCommentAlt className="cursor-pointer hover:text-white transition-colors" />
+          <FaEllipsisV className="cursor-pointer hover:text-white transition-colors" />
         </div>
       </div>
 
-      <div className="p-2">
-        <input placeholder="Search or start new chat" className="w-full p-2 rounded bg-gray-100" />
+      {/* Search */}
+      <div className="p-2 bg-[#111B21] border-b border-[#202C33]">
+        <div className="flex items-center bg-[#202C33] rounded-lg px-2 py-1">
+          <FaSearch className="text-gray-400 mr-2" />
+          <input
+            type="text"
+            placeholder="Search or start new chat"
+            className="bg-transparent outline-none w-full text-sm text-white placeholder-gray-400"
+          />
+        </div>
       </div>
 
-      <div className="flex-1 overflow-auto">
-        {conversations.map(conv => (
-          <ChatListItem key={conv._id} conv={conv} onClick={()=>onOpen(conv)} active={activeConv?._id===conv._id} />
-        ))}
+      {/* Conversation List */}
+      <div className="flex-1 overflow-y-auto">
+        {conversations.map((conv) => {
+          const isActive = activeConv && activeConv._id === conv._id;
+
+          let lastMsgText = "";
+          if (conv.lastMessage?.body) {
+            lastMsgText = conv.lastMessage.body;
+          } else if (conv.lastMessage?.text) {
+            lastMsgText = conv.lastMessage.text;
+          } else if (conv.lastMessage?.type === "image") {
+            lastMsgText = "📷 Photo";
+          } else if (conv.lastMessage?.type) {
+            lastMsgText = conv.lastMessage.type;
+          }
+
+          const lastMsgTime =
+            conv.lastMessage?.createdAt || conv.lastMessage?.timestamp;
+
+          return (
+            <div
+              key={conv._id}
+              onClick={() => onOpen(conv)}
+              className={`flex items-center px-3 py-2 cursor-pointer border-b border-[#202C33] transition-colors duration-150 ease-in-out ${isActive ? "bg-[#2A3942] hover:bg-[#3B4A54]" : "hover:bg-[#2A3942]"}`}
+            >
+              <img
+                src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
+                  conv.contactName || conv.wa_id
+                )}&background=2A3942&color=fff`}
+                alt="Avatar"
+                className="w-12 h-12 rounded-full mr-3 flex-shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-center">
+                  <h2 className="font-medium text-white truncate">
+                    {conv.contactName || conv.wa_id}
+                  </h2>
+                  {lastMsgTime && (
+                    <span className="text-xs text-white/60 flex-shrink-0">
+                      {new Date(lastMsgTime).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-white/60 truncate">{lastMsgText}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
-    </aside>
-  )
+    </div>
+  );
 }

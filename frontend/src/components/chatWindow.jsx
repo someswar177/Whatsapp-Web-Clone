@@ -7,7 +7,7 @@ import { MdSearch } from "react-icons/md";
 import { HiDotsVertical } from "react-icons/hi";
 import chatBg from "../assets/chat-bg.webp";
 
-export default function ChatWindow({ conversation, messages }) {
+export default function ChatWindow({ conversation, messages, onBack, isMobile }) {
   const [localMsgs, setLocalMsgs] = useState(messages || []);
   const containerRef = useRef();
 
@@ -76,6 +76,14 @@ export default function ChatWindow({ conversation, messages }) {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-[#202C33] bg-[#202C33]">
         <div className="flex items-center gap-3">
+          {isMobile && (
+            <button
+              onClick={onBack}
+              className="text-white mr-2 p-1 rounded hover:bg-[#2A3942]"
+            >
+              ←
+            </button>
+          )}
           <div className="w-10 h-10 rounded-full bg-gray-500 flex items-center justify-center text-white font-semibold">
             {conversation.contactName?.[0] || conversation.wa_id?.[0] || "?"}
           </div>
@@ -118,11 +126,9 @@ export default function ChatWindow({ conversation, messages }) {
       </div>
 
       {/* Bottom input */}
-      <div className="px-3 py-2 border-t border-[#202C33] bg-[#202C33]">
-        <div className="max-w-full mx-auto flex items-center gap-3">
-          <div className="flex-1">
-            <MessageInput onSend={handleSend} />
-          </div>
+      <div className="w-full border-t border-[#202C33] bg-[#202C33]">
+        <div className="flex items-center gap-2 px-2 sm:px-3">
+          <MessageInput onSend={handleSend} />
         </div>
       </div>
     </div>

@@ -11,17 +11,25 @@ export default function App() {
   const [messagesMap, setMessagesMap] = useState({})
   const [loading, setLoading] = useState(true)
   const [progress, setProgress] = useState(0)
-  const [showPopup, setShowPopup] = useState(false) // 👈 for modal
+  const [showPopup, setShowPopup] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
 
   useEffect(() => {
-    // fake loading progress
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  useEffect(() => {
     if (loading) {
       const timer = setInterval(() => {
         setProgress(prev => {
           if (prev >= 100) {
             clearInterval(timer)
             setLoading(false)
-            setShowPopup(true) // 👈 show popup when loading finishes
+            setShowPopup(true)
             return 100
           }
           return Math.min(prev + Math.floor(Math.random() * 10) + 5, 100)
@@ -101,42 +109,73 @@ export default function App() {
     }
   }
 
+  function handleBack() {
+    setActiveConv(null)
+  }
+
   if (loading) {
     return <LoadingScreen progress={progress} />
   }
 
   return (
     <div className="h-screen bg-light flex relative">
-      <Sidebar conversations={conversations} onOpen={openConversation} activeConv={activeConv} />
-      <ChatWindow conversation={activeConv} messages={(activeConv && messagesMap[activeConv._id]) || []} />
+      {/* Desktop Layout */}
+      {!isMobile && (
+        <>
+          <Sidebar
+            conversations={conversations}
+            onOpen={openConversation}
+            activeConv={activeConv}
+          />
+          <ChatWindow
+            conversation={activeConv}
+            messages={(activeConv && messagesMap[activeConv._id]) || []}
+          />
+        </>
+      )}
+
+      {/* Mobile Layout */}
+      {isMobile && (
+        <>
+          {!activeConv ? (
+            <Sidebar
+              conversations={conversations}
+              onOpen={openConversation}
+              activeConv={activeConv}
+              isMobile={true}
+            />
+          ) : (
+            <ChatWindow
+              conversation={activeConv}
+              messages={(activeConv && messagesMap[activeConv._id]) || []}
+              onBack={handleBack}
+              isMobile={true}
+            />
+          )}
+        </>
+      )}
 
       {/* Popup Modal */}
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
           <div className="bg-white rounded-2xl shadow-xl w-96 p-6 relative">
-            {/* Close button (top-right) */}
             <button
               className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
               onClick={() => setShowPopup(false)}
             >
               ✕
             </button>
-
-            {/* Content */}
             <h2 className="text-xl font-semibold mb-4">Greetings 👋</h2>
             <p className="text-gray-700 mb-4">
               Welcome to our <strong>WhatsApp Web clone!</strong>:
             </p>
             <ul className="list-disc list-inside text-gray-600 mb-4 space-y-1">
-              <li>
-                At the moment, it's a lightweight demo built with a Webhook Payload Processor that uses sample JSON payloads to simulate the WhatsApp Business API.              </li>
-              <li>This means you can send and view messages. </li>
+              <li>Lightweight demo built with Webhook Payload Processor.</li>
+              <li>You can send and view messages.</li>
             </ul>
             <p className="text-gray-700">
-              In the future, it will be upgraded into a <strong>multi-user platform</strong> with authentication, enhanced features, and full real-time messaging support.
+              Future upgrade → <strong>multi-user platform</strong> with authentication and real-time features.
             </p>
-
-            {/* Action button (bottom-right) */}
             <div className="flex justify-end mt-6">
               <button
                 onClick={() => setShowPopup(false)}
@@ -148,7 +187,6 @@ export default function App() {
           </div>
         </div>
       )}
-
     </div>
   )
 }

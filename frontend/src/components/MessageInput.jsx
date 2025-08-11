@@ -17,22 +17,22 @@ export default function MessageInput({ onSend }) {
   return (
     <form
       onSubmit={submit}
-      className="flex items-center gap-2 p-1 bg-[#202C33]"
+      className="flex items-center gap-2 w-full p-1 sm:p-2 bg-[#202C33]"
     >
       {/* Emoji button */}
       <button
         type="button"
-        className="text-gray-400 hover:text-gray-300 p-2"
+        className="text-gray-400 hover:text-gray-300 p-2 sm:p-3"
       >
-        <BsEmojiSmile size={22} />
+        <BsEmojiSmile size={20} className="sm:size-[22px]" />
       </button>
 
       {/* Attach button */}
       <button
         type="button"
-        className="text-gray-400 hover:text-gray-300 p-2"
+        className="text-gray-400 hover:text-gray-300 p-2 sm:p-3"
       >
-        <AiOutlinePaperClip size={22} />
+        <AiOutlinePaperClip size={20} className="sm:size-[22px]" />
       </button>
 
       {/* Input */}
@@ -40,25 +40,26 @@ export default function MessageInput({ onSend }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Type a message"
-        className="flex-1 px-3 py-2 rounded-lg bg-[#2A3942] text-[14px] text-white placeholder-gray-400 outline-none"
+        className="flex-1 min-w-0 px-2 sm:px-3 py-2 rounded-lg bg-[#2A3942] text-[13px] sm:text-[14px] text-white placeholder-gray-400 outline-none"
       />
+
 
       {/* Send or mic */}
       {text.trim() ? (
         <button
           type="submit"
-          className="text-green-500 hover:text-green-400 p-2 transition-colors"
+          className="text-green-500 hover:text-green-400 p-2 sm:p-3 transition-colors"
           title="Send"
         >
-          <RiSendPlaneFill size={22} />
+          <RiSendPlaneFill size={20} className="sm:size-[22px]" />
         </button>
       ) : (
         <button
           type="button"
-          className="text-gray-400 hover:text-gray-300 p-2"
+          className="text-gray-400 hover:text-gray-300 p-2 sm:p-3"
           title="Record voice"
         >
-          <BsMic size={22} />
+          <BsMic size={20} className="sm:size-[22px]" />
         </button>
       )}
     </form>

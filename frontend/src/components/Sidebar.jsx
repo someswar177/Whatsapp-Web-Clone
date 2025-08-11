@@ -6,32 +6,51 @@ import {
   FaSearch,
 } from "react-icons/fa";
 
-export default function Sidebar({ conversations, onOpen, activeConv }) {
+export default function Sidebar({ conversations, onOpen, activeConv, isMobile }) {
   return (
-    <div className="w-[35%] border-r border-[#202C33] flex flex-col bg-[#111B21]">
+    <div
+      className={`${isMobile ? "w-full" : "w-[35%]"} border-r border-[#202C33] flex flex-col bg-[#111B21]`}
+    >
       {/* Header */}
-      <div className="flex items-center justify-between p-3 bg-[#202C33] border-b border-[#202C33]">
-        {/* <img
-          src={`https://ui-avatars.com/api/?name=You&background=2A3942&color=fff`}
-          alt="User Avatar"
-          className="w-10 h-10 rounded-full"
-        /> */}
-        <h1 className="text-white text-3xl font-bold">Chats</h1>
-        <div className="flex space-x-4 text-gray-300">
-          <FaCircleNotch className="cursor-pointer hover:text-white transition-colors" size={18} />
-          <FaCommentAlt className="cursor-pointer hover:text-white transition-colors" size={18} />
-          <FaEllipsisV className="cursor-pointer hover:text-white transition-colors" size={18} />
+      <div
+        className={`
+    flex items-center justify-between 
+    ${isMobile ? "p-2" : "p-3"} 
+    bg-[#202C33] border-b border-[#202C33]
+  `}
+      >
+        <h1
+          className={`text-white font-bold ${isMobile ? "text-xl" : "text-3xl"}`}
+        >
+          Chats
+        </h1>
+
+        {/* Icons wrapper */}
+        <div className="flex items-center gap-3 sm:gap-4 text-gray-300">
+          {[FaCircleNotch, FaCommentAlt, FaEllipsisV].map((Icon, idx) => (
+            <button
+              key={idx}
+              className="p-2 rounded-full hover:bg-[#2A3942] transition-colors"
+            >
+              <Icon size={isMobile ? 18 : 20} />
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Search */}
-      <div className="p-2 bg-[#111B21] border-b border-[#202C33]">
+      <div
+        className={`bg-[#111B21] border-b border-[#202C33] ${isMobile ? "p-1" : "p-2"}`}
+      >
         <div className="flex items-center bg-[#202C33] rounded-lg px-3 py-2">
-          <FaSearch className="text-gray-400 mr-3" />
+          <FaSearch
+            className={`text-gray-400 mr-3 ${isMobile ? "text-sm" : ""}`}
+          />
           <input
             type="text"
             placeholder="Search or start new chat"
-            className="bg-transparent outline-none w-full text-sm text-white placeholder-gray-400"
+            className={`bg-transparent outline-none w-full ${isMobile ? "text-xs" : "text-sm"
+              } text-white placeholder-gray-400`}
           />
         </div>
       </div>
@@ -59,25 +78,35 @@ export default function Sidebar({ conversations, onOpen, activeConv }) {
             <div
               key={conv._id}
               onClick={() => onOpen(conv)}
-              className={`flex items-center px-4 py-3 cursor-pointer border-b border-white/10 transition-colors duration-150 ease-in-out ${isActive ? "bg-[#2F3B43] hover:bg-[#3B4A54]" : "hover:bg-[#2A3942]"
-                }`}
+              className={`flex items-center cursor-pointer border-b border-white/10 transition-colors duration-150 ease-in-out
+    ${isActive ? "bg-[#2F3B43] hover:bg-[#3B4A54]" : "hover:bg-[#2A3942]"}
+    ${isMobile ? "px-3 py-2" : "px-4 py-3"}
+  `}
             >
-              <div className="relative">
+              <div className="relative flex-shrink-0">
                 <img
                   src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
                     conv.contactName || conv.wa_id
                   )}&background=364147&color=fff`}
                   alt="Avatar"
-                  className="w-12 h-12 rounded-full flex-shrink-0 border-2 border-[#111B21]"
+                  className={`rounded-full border-2 ${isActive ? "border-[#25D366]" : "border-transparent"
+                    } ${isMobile ? "w-10 h-10" : "w-12 h-12"}`}
                 />
               </div>
-              <div className="flex-1 min-w-0 ml-4">
+
+              <div className="flex-1 min-w-0 ml-3 sm:ml-4">
                 <div className="flex justify-between items-center">
-                  <h2 className="text-[15px] font-semibold text-white truncate">
+                  <h2
+                    className={`truncate font-semibold text-white ${isMobile ? "text-sm" : "text-[15px]"
+                      }`}
+                  >
                     {conv.contactName || conv.wa_id}
                   </h2>
                   {lastMsgTime && (
-                    <span className="text-xs text-green-500 flex-shrink-0">
+                    <span
+                      className={`flex-shrink-0 text-green-500 ${isMobile ? "text-[10px]" : "text-xs"
+                        }`}
+                    >
                       {new Date(lastMsgTime).toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
@@ -85,7 +114,10 @@ export default function Sidebar({ conversations, onOpen, activeConv }) {
                     </span>
                   )}
                 </div>
-                <p className="text-[13px] text-white/60 truncate">
+                <p
+                  className={`truncate text-white/60 ${isMobile ? "text-[11px]" : "text-[13px]"
+                    }`}
+                >
                   {lastMsgText}
                 </p>
               </div>

@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv4-msg2-api",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              },
+              "contacts": [
+                {
+                  "profile": { "name": "Arjun Mehta" },
+                  "wa_id": "918745632198"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "918329446654",
+                  "id": "wamid.HBgMOTE4NzQ1NjMyMTk4FQIAEhggXXYYZZ112233",
+                  "timestamp": "1754402020",
+                  "text": { "body": "Hi Arjun, we offer wedding, portrait, and event packages. Which are you interested in?" },
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        ],
+        "id": "30164062719905282"
+      }
+    ],
+    "gs_app_id": "conv4-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:30:20",
+  "startedAt": "2025-08-06 12:30:20",
+  "completedAt": "2025-08-06 12:30:21",
+  "executed": true
+}

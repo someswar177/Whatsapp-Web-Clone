@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv4-msg1-user",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "contacts": [
+                {
+                  "profile": { "name": "Arjun Mehta" },
+                  "wa_id": "918745632198"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "918745632198",
+                  "id": "wamid.HBgMOTE4NzQ1NjMyMTk4FQIAEhggAABBCCDD112233",
+                  "timestamp": "1754402000",
+                  "text": { "body": "Hello, I’m interested in your photography packages." },
+                  "type": "text"
+                }
+              ],
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              }
+            }
+          }
+        ],
+        "id": "30164062719905281"
+      }
+    ],
+    "gs_app_id": "conv4-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:30:00",
+  "startedAt": "2025-08-06 12:30:00",
+  "completedAt": "2025-08-06 12:30:01",
+  "executed": true
+}

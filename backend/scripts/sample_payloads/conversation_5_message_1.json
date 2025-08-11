@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv5-msg1-user",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "contacts": [
+                {
+                  "profile": { "name": "Priya Nair" },
+                  "wa_id": "917654328901"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "917654328901",
+                  "id": "wamid.HBgMOTE3NjU0MzI4OTAxFQIAEhggAA1122BB3344",
+                  "timestamp": "1754403000",
+                  "text": { "body": "Do you have any discounts on furniture this week?" },
+                  "type": "text"
+                }
+              ],
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              }
+            }
+          }
+        ],
+        "id": "30164062719905285"
+      }
+    ],
+    "gs_app_id": "conv5-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:50:00",
+  "startedAt": "2025-08-06 12:50:00",
+  "completedAt": "2025-08-06 12:50:01",
+  "executed": true
+}

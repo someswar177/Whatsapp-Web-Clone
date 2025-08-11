@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv3-msg2-api",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              },
+              "contacts": [
+                {
+                  "profile": { "name": "Amit Sharma" },
+                  "wa_id": "919812345678"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "918329446654",
+                  "id": "wamid.HBgMOTE5ODEyMzQ1Njc4FQIAEhggAMITMSG0002",
+                  "timestamp": "1754402030",
+                  "text": { "body": "Hi Amit! We’re open from 10 AM to 8 PM every day except Sunday." },
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        ],
+        "id": "30164062719905282"
+      }
+    ],
+    "gs_app_id": "conv3-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:30:30",
+  "startedAt": "2025-08-06 12:30:30",
+  "completedAt": "2025-08-06 12:30:31",
+  "executed": true
+}

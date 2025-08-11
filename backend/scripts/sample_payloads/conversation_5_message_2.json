@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv5-msg2-api",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              },
+              "contacts": [
+                {
+                  "profile": { "name": "Priya Nair" },
+                  "wa_id": "917654328901"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "918329446654",
+                  "id": "wamid.HBgMOTE3NjU0MzI4OTAxFQIAEhggZZYYXX8899AA",
+                  "timestamp": "1754403020",
+                  "text": { "body": "Yes Priya, we’re offering 15% off on all wooden furniture until Sunday." },
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        ],
+        "id": "30164062719905286"
+      }
+    ],
+    "gs_app_id": "conv5-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:50:20",
+  "startedAt": "2025-08-06 12:50:20",
+  "completedAt": "2025-08-06 12:50:21",
+  "executed": true
+}

@@ -20,7 +20,7 @@ export default function MessageBubble({ message, me }) {
           me ? "bg-[#005C4B]" : "bg-[#202C33]"
         } max-w-[60%] px-3 py-2 rounded-lg shadow text-white`}
       >
-        <span className="whitespace-pre-wrap break-words text-sm text-gray-100 flex items-end gap-1">
+        <span className="whitespace-pre-wrap break-words text-[14px] font-semibold text-gray-100 flex items-end gap-1">
           {message.body}
           <span className="text-[0.65rem] text-white/60 flex items-center flex-shrink-0">
             {time}

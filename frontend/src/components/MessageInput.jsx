@@ -22,7 +22,7 @@ export default function MessageInput({ onSend }) {
       {/* Emoji button */}
       <button
         type="button"
-        className="text-gray-400 hover:text-gray-300 p-1"
+        className="text-gray-400 hover:text-gray-300 p-2"
       >
         <BsEmojiSmile size={22} />
       </button>
@@ -30,24 +30,24 @@ export default function MessageInput({ onSend }) {
       {/* Attach button */}
       <button
         type="button"
-        className="text-gray-400 hover:text-gray-300 p-1"
+        className="text-gray-400 hover:text-gray-300 p-2"
       >
         <AiOutlinePaperClip size={22} />
       </button>
 
-      {/* Input field */}
+      {/* Input */}
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
         placeholder="Type a message"
-        className="flex-1 p-1 rounded-lg bg-[#2A3942] text-white placeholder-gray-400 outline-none"
+        className="flex-1 px-3 py-2 rounded-lg bg-[#2A3942] text-[14px] text-white placeholder-gray-400 outline-none"
       />
 
-      {/* Conditional: Mic if no text, Send if text */}
+      {/* Send or mic */}
       {text.trim() ? (
         <button
           type="submit"
-          className="text-green-500 hover:text-green-400 p-1 transition-colors"
+          className="text-green-500 hover:text-green-400 p-2 transition-colors"
           title="Send"
         >
           <RiSendPlaneFill size={22} />
@@ -55,7 +55,7 @@ export default function MessageInput({ onSend }) {
       ) : (
         <button
           type="button"
-          className="text-gray-400 hover:text-gray-300 p-1"
+          className="text-gray-400 hover:text-gray-300 p-2"
           title="Record voice"
         >
           <BsMic size={22} />

@@ -1,0 +1,44 @@
+{
+  "payload_type": "whatsapp_webhook",
+  "_id": "conv3-msg1-user",
+  "metaData": {
+    "entry": [
+      {
+        "changes": [
+          {
+            "field": "messages",
+            "value": {
+              "contacts": [
+                {
+                  "profile": { "name": "Amit Sharma" },
+                  "wa_id": "919812345678"
+                }
+              ],
+              "messages": [
+                {
+                  "from": "919812345678",
+                  "id": "wamid.HBgMOTE5ODEyMzQ1Njc4FQIAEhggAMITMSG0001",
+                  "timestamp": "1754402000",
+                  "text": { "body": "Hello! Can you tell me your store timings?" },
+                  "type": "text"
+                }
+              ],
+              "messaging_product": "whatsapp",
+              "metadata": {
+                "display_phone_number": "918329446654",
+                "phone_number_id": "629305560276479"
+              }
+            }
+          }
+        ],
+        "id": "30164062719905281"
+      }
+    ],
+    "gs_app_id": "conv3-app",
+    "object": "whatsapp_business_account"
+  },
+  "createdAt": "2025-08-06 12:30:00",
+  "startedAt": "2025-08-06 12:30:00",
+  "completedAt": "2025-08-06 12:30:01",
+  "executed": true
+}

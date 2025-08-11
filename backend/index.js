@@ -5,15 +5,18 @@ const cors = require('cors');
 const connectDB = require('./config/database');
 const app = express();
 const { Server } = require('socket.io');
+const run = require('./scripts/processPayloads');
 
 app.use(express.json());
+app.use(cors({ origin: process.env.CLIENT_URL || '*', credentials: true }));
+
 
 
 const PORT = process.env.PORT || 8000;
 
-app.get('/', (req, res) => {
-    res.send("Hello from Backend");
-});
+// app.get('/', (req, res) => {
+//     res.send("Hello from Backend");
+// });
 
 app.use('/api/webhook', require('./routes/webhook'));
 app.use('/api/conversations', require('./routes/conversations'));
@@ -54,9 +57,10 @@ io.on('connection', (socket) => {
 
 
 connectDB().then(() => {
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
         console.log(`App listening on : http://localhost:${PORT}`);
+        // run();
     });
 }).catch((err) => {
-    console.error("Failed to connect to the database:",err.message);
+    console.error("Failed to connect to the database:", err.message);
 });

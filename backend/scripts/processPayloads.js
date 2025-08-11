@@ -1,7 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
-const db = require('../config/db');
+const db = require('../config/database');
 const { processWebhookPayload } = require('../services/webhookService');
 
 const SAMPLES_DIR = path.join(__dirname, 'sample_payloads');
@@ -16,6 +16,7 @@ async function run() {
       let payload;
       try {
         payload = JSON.parse(raw);
+        console.log(payload);
       } catch (e) {
         console.error('Invalid JSON in', full, e);
         continue;
@@ -30,4 +31,6 @@ async function run() {
   }
 }
 
-run();
+// run();
+
+module.exports = run;

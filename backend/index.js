@@ -12,7 +12,7 @@ app.use(cors({ origin: process.env.CLIENT_URL || '*', credentials: true }));
 
 
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 // app.get('/', (req, res) => {
 //     res.send("Hello from Backend");
@@ -28,14 +28,11 @@ const io = new Server(server, {
   cors: { origin: process.env.CLIENT_URL || '*', methods: ['GET','POST'] }
 });
 
-// attach io to app so controllers/services can emit
 app.set('io', io);
 
-// simple socket logic
 io.on('connection', (socket) => {
   console.log('Socket connected:', socket.id);
 
-  // client can join rooms: { type: 'user', id: wa_id } or { type: 'conv', id: convId }
   socket.on('join', ({ type, id }) => {
     if (!type || !id) return;
     const room = type === 'user' ? `user_${id}` : `conv_${id}`;
